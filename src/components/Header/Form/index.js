@@ -20,6 +20,7 @@ function Form({ todos, setTodos }) {
       return false;
     }
     setTodos([...todos, todo]);
+    setTodo({ initialTodoValue });
     console.log(todo);
   };
   return (
