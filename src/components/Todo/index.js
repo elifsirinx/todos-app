@@ -36,6 +36,10 @@ function Todo() {
             onClick={() => handleToggle(todo.id)}
             style={{ textDecoration: todo.completed ? "line-through" : "none" }}
           >
+            <div className="view">
+              <input className="toggle" type="checkbox" />
+              <label>{todo.text}</label>
+            </div>
             {todo.text}
           </li>
         ))}
@@ -44,6 +48,21 @@ function Todo() {
       <button>Add</button>
     </div>
   );
+
+  // <ul className="todo-list">
+  //   {todos.map((todo, index) => (
+  //     <li key={index} className={status}>
+  //       <div className="view">
+  //         <input className="toggle" type="checkbox" onClick={handleChange} />
+  //         <label>{todo}</label>
+  //         <button
+  //           className="destroy"
+  //           onClick={() => deleteByValue(todo)}
+  //         ></button>
+  //       </div>
+  //     </li>
+  //   ))}
+  // </ul>;
 }
 
 export default Todo;

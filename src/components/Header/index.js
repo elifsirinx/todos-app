@@ -4,7 +4,19 @@ import List from "./List";
 import Filter from "./Filter";
 
 function Header() {
-  const [todos, setTodos] = useState(["Do your work!", "Do that!", "Awesome!"]);
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      text: "Write a thing!",
+      completed: false,
+    },
+    {
+      id: 2,
+      text: "Write second thing!",
+      completed: false,
+    },
+  ]);
+
   const todosCount = todos.length;
 
   useEffect(() => {

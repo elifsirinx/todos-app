@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 function Form({ todos, setTodos }) {
-  const initialTodoValue = "";
-  const [todo, setTodo] = useState("");
+  const initialTodoValue = { id: 0, text: "", completed: false };
+  const [todo, setTodo] = useState({ text: "" });
 
   const useEffect =
     (() => {
@@ -11,7 +11,12 @@ function Form({ todos, setTodos }) {
     [todos]);
 
   const onChangeInput = (e) => {
-    setTodo(e.target.value);
+    setTodo({
+      id: todos.length !== 0 ? todos.slice(-1)[0].id + 1 : 0,
+      text: e.target.value,
+      completed: false,
+    });
+    console.log("ID SLICE", todos.slice(-1)[0].id);
   };
 
   const onSubmit = (e) => {
@@ -20,7 +25,7 @@ function Form({ todos, setTodos }) {
       return false;
     }
     setTodos([...todos, todo]);
-    setTodo({ initialTodoValue });
+    setTodo(initialTodoValue);
     console.log(todo);
   };
   return (
@@ -30,7 +35,7 @@ function Form({ todos, setTodos }) {
         <input
           className="new-todo"
           name="todo"
-          value={todo}
+          value={todo.text}
           placeholder="What needs to be done?"
           onChange={onChangeInput}
           autoFocus

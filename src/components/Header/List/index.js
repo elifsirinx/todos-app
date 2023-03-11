@@ -3,23 +3,52 @@ import { useState } from "react";
 function List({ todos, setTodos, todosCount }) {
   const [status, setStatus] = useState("completed");
   todosCount = todos.length;
+  const [filterTodos, setFilterTodos] = useState([]);
 
-  const deleteByValue = (value) => {
-    setTodos((oldValues) => {
-      return oldValues.filter((todo) => todo !== value);
+  const handleCompleted = () => {
+    setFilterTodos([todos]);
+    console.log("FILTER TODOS : ", filterTodos);
+    const filtered = todos.filter((todo) => todo.completed === true);
+    setFilterTodos(filtered);
+    console.log("filter ", filtered);
+  };
+
+  // const deleteByValue = (value) => {
+  //   setTodos((oldValues) => {
+  //     return oldValues.filter((todo) => todo !== value);
+  //   });
+  // };
+
+  const deleteById = (id) => {
+    setTodos((todos) => {
+      return todos.filter((todo) => todo.id !== id);
     });
   };
 
-  const handleChange = (e) => {
-    console.log(e.target.checked);
-    if (e.target.checked) {
-      setStatus("completed");
-      console.log("completed");
-    } else {
-      setStatus("on-hold");
-      console.log("on-hold");
-    }
+  const deleteByID = (id) => {
+    const tempTodo = todos.filter((todo) => todo.id !== id); // this will remove the item which matches the id
+    setTodos(tempTodo);
   };
+  const handleToggle = (id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id == id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      })
+    );
+  };
+  // const handleChange = (e) => {
+  //   console.log(e.target.checked);
+  //   if (e.target.checked) {
+  //     setStatus("completed");
+  //     console.log("completed");
+  //   } else {
+  //     setStatus("on-hold");
+  //     console.log("on-hold");
+  //   }
+  // };
 
   return (
     <div>
@@ -27,17 +56,20 @@ function List({ todos, setTodos, todosCount }) {
       <h2>{status}</h2>
       <ul className="todo-list">
         {todos.map((todo, index) => (
-          <li key={index} className={status}>
+          <li
+            key={todo.id}
+            style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+          >
             <div className="view">
               <input
                 className="toggle"
                 type="checkbox"
-                onClick={handleChange}
+                onClick={() => handleToggle(todo.id)}
               />
-              <label>{todo}</label>
+              <label>{todo.text}</label>
               <button
                 className="destroy"
-                onClick={() => deleteByValue(todo)}
+                onClick={() => deleteById(todo.id)}
               ></button>
             </div>
           </li>
